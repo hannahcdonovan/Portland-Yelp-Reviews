@@ -2,40 +2,38 @@ import pandas as pd
 
 #read in cleaned_data rest file
 rest_meta_data = pd.read_csv('cleaned_rest_data.csv')
-
 del rest_meta_data['Unnamed: 0']
 
-rest_meta_data.head()
+# for clarity's sake, renamed to id_num since this is the primary key between the reviews table 
+# and the restaurant table (which contains meta data about each restaurant) -- what we will be
+# merging on
+rest_meta_data.rename(columns={'restaurant_id' : "id_num"}, inplace=True)
 
-#alter current dataframe to contain only the restaurants that have category "Italina" -- does not contain reviews
+# query for all restuarants with 'Italian' categorization
 italian = rest_meta_data[rest_meta_data.category.str.contains('Italian')]
+print(italian)
 
-#alter current dataframe to contain only "breakfast and brunch" categories
+# query for all restaurants with 'Breakfast & Brunch Categorization'
 breakfast_brunch = rest_meta_data[rest_meta_data.category.str.contains('Breakfast & Brunch')]
-
-italian.rename(columns={'restaurant_id' : "id_num"}, inplace=True)
-breakfast_brunch.rename(columns={'restaurant_id' : "id_num"}, inplace=True)
+print(breakfast_brunch)
 
 #read in the restaurant reviews with the dates in and merge with review csv file
-
 review_data = pd.read_csv('reviews_with_dates.csv')
 
+# merge the tables on the id_num (primary key)
 italian = pd.merge(review_data, italian, on="id_num")
 breakfast_brunch = pd.merge(review_data, breakfast_brunch, on="id_num")
 
+# now, get all the reviews!
 italian = italian['review_text']
 breakfast_brunch = breakfast_brunch['review_text']
 
-italian.to_csv('italian_reviews')
-breakfast_brunch.to_csv('breakfast_brunch_reviews')
-
-rest_meta_data.rename(columns={'restaurant_id' : "id_num"}, inplace=True)
+# italian.to_csv('italian_reviews.csv')
+# breakfast_brunch.to_csv('breakfast_brunch_reviews.csv')
 
 all_reviews = pd.merge(review_data, rest_meta_data, on="id_num")
 
-del all_reviews['Unnamed: 0']
+# del all_reviews['Unnamed: 0']
 
-# all_reviews
-
-review_data = review_data['review_text']
-review_data.to_csv('all_reviews.csv')
+# review_data = review_data['review_text']
+# review_data.to_csv('all_reviews.csv')
