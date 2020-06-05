@@ -1,8 +1,7 @@
 # Sentiment Analysis for Portland, Maine Restaurant Reviews
-    technologies used: pandas, json, lxml (for scrapping), NLTK
-    notice: for classroom assignment, needed to use csv files instead of sql db tables to use Voyant widgets
-    see our results here:
-     https://sites.google.com/view/portland-yelp-sentiment/home
+- technologies used: pandas, json, lxml (for scrapping), NLTK
+- notice: for classroom assignment, needed to use csv files instead of sql db tables to use Voyant widgets
+- see our results here: https://sites.google.com/view/portland-yelp-sentiment/home
 
 Chain of Logic
 - Using the Yelp Fusion API, posted a GET https://api.yelp.com/v3/businesses/search?location=Portland,ME
